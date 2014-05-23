@@ -12,6 +12,12 @@ if(!'data.table' %in% rownames(installed.packages())){
 
 library(data.table)
 
+if(!'reshape2' %in% rownames(installed.packages())){
+  install.packages('reshape2')
+}
+
+library(reshape2)
+
 ## Download data
 datafile<-'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 download.file(datafile, destfile = 'Dataset.zip')
@@ -50,4 +56,5 @@ Datamelt<-melt(Data, id.vars=c('subjects','lable'), measure.vars=features[Ext])
 tidyData<-dcast.data.table(data.table(Datamelt),subjects+lable~variable,mean)
 rm(lable,subjects,Ext,features, Data, Datamelt )
 
-write.csv(tidyData,file='tidyData.txt')
+write.csv(tidyData,file='tidyData.csv')
+
